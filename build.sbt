@@ -1,37 +1,38 @@
 import Dependencies.{io => _io, _}
 
-ThisBuild / organization := "playground"
-//ThisBuild / scalaVersion := "3.0.2"
-ThisBuild / scalaVersion := "2.13.6"
-
-ThisBuild / scalacOptions ++=
-  Seq(
-    "-deprecation",
-    "-feature",
-    "-language:implicitConversions",
-    "-unchecked",
-    "-Xfatal-warnings",
-  )
+addCompilerPlugin(org.typelevel.`kind-projector` cross CrossVersion.full)
+enablePlugins(JavaAppPackaging, DockerPlugin)
 
 lazy val `zio-playground` =
   project
     .in(file("."))
-    .settings(name := "zio-playground")
+    .settings(thisBuildSettings)
     .settings(commonSettings)
     .settings(dependencies)
+    .settings(dockerSettings)
+
+lazy val thisBuildSettings = Seq(
+  name := "zio-playground",
+  organization := "playground",
+  scalaVersion := "2.13.6",
+)
 
 lazy val commonSettings = commonScalacOptions ++ Seq(
   update / evictionWarningOptions := EvictionWarningOptions.empty,
-  testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework"))
+  testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework")),
 )
 
 lazy val commonScalacOptions = Seq(
   Compile / console / scalacOptions --= Seq(
     "-Wunused:_",
+    "-deprecation",
+    "-feature",
+    "-language:implicitConversions",
+    "-unchecked",
     "-Xfatal-warnings",
   ),
   Test / console / scalacOptions :=
-    (Compile / console / scalacOptions).value
+    (Compile / console / scalacOptions).value,
 )
 
 lazy val dependencies = Seq(
@@ -56,4 +57,9 @@ lazy val dependencies = Seq(
   ).map(_ % Test),
 )
 
-addCompilerPlugin(org.typelevel.`kind-projector` cross CrossVersion.full)
+lazy val dockerSettings = Seq(
+  dockerBaseImage := "openjdk:11-jre-slim-buster",
+  Docker / dockerExposedPorts := Seq(8080),
+  Docker / dockerUsername := Some("deontaljaard"),
+  Docker / dockerRepository := Some("hub.docker.com")
+)

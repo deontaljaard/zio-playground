@@ -45,6 +45,12 @@ object Dependencies {
   }
 
   case object org {
+
+    case object flyway {
+      val `flyway-core` =
+        "org.flywaydb" % "flyway-core" % "8.0.2"
+    }
+
     case object http4s {
       val `http4s-blaze-server` =
         dependency("blaze-server")
@@ -57,6 +63,23 @@ object Dependencies {
 
       private def dependency(artifact: String): ModuleID =
         "org.http4s" %% s"http4s-$artifact" % "1.0.0-M23"
+    }
+
+    case object tpolecat {
+      val `doobie-core` =
+        dependency("doobie-core")
+
+      val `doobie-hikari` =
+        dependency("doobie-hikari")
+
+      val `doobie-postgres` =
+        dependency("doobie-postgres")
+
+      val `doobie-specs2` =
+        dependency("doobie-specs2")
+
+      def dependency(artifactId: String): ModuleID =
+        "org.tpolecat" %% artifactId % "1.0.0-M3"
     }
 
     case object typelevel {

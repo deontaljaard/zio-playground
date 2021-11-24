@@ -1,4 +1,4 @@
-package playground.zioplayground.http
+package playground.zioplayground.utils
 
 import org.http4s.{Method, Request, Uri}
 

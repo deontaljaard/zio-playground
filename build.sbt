@@ -44,16 +44,21 @@ lazy val dependencies = Seq(
     _io.circe.`circe-core`,
     _io.circe.`circe-generic`,
     _io.circe.`circe-parser`,
+    org.flyway.`flyway-core`,
     org.http4s.`http4s-blaze-server`,
     org.http4s.`http4s-dsl`,
     org.http4s.`http4s-circe`,
+    org.tpolecat.`doobie-core`,
+    org.tpolecat.`doobie-hikari`,
+    org.tpolecat.`doobie-postgres`,
   ),
   // test dependencies
   libraryDependencies ++= Seq(
-    org.scalatest.scalatest,
-    org.scalatestplus.`scalacheck-1-15`,
     dev.zio.`zio-test`,
     dev.zio.`zio-test-sbt`,
+    org.scalatest.scalatest,
+    org.scalatestplus.`scalacheck-1-15`,
+    org.tpolecat.`doobie-specs2`,
   ).map(_ % Test),
 )
 

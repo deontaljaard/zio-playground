@@ -1,4 +1,4 @@
-package playground.zioplayground.http
+package playground.zioplayground.health.http
 
 import io.circe._
 import io.circe.generic.semiauto._

@@ -9,7 +9,8 @@ import org.http4s.server.Router
 import org.http4s.server.middleware.CORS
 import org.http4s.{HttpApp, Request, Response}
 import playground.zioplayground.config.{HttpConfig, getAppConfig}
-import playground.zioplayground.http.HealthService
+import playground.zioplayground.country.http.CountryService
+import playground.zioplayground.health.http.HealthService
 import zio.interop.catz._
 import zio.{ExitCode => ZExitCode, _}
 
@@ -24,13 +25,15 @@ object Main extends App {
   val app: ZIO[layers.AppEnv, Throwable, ZExitCode] =
     for {
       cfg <- getAppConfig
-      app = httpApp("")
+      _ <- zio.console.putStrLn(s"Starting with config: $cfg")
+      app = httpApp()
       _ <- runHttp(app, cfg.http)
     } yield ZExitCode.success
 
-  def httpApp(cfg: String): Kleisli[AppTask, Request[AppTask], Response[AppTask]] =
+  def httpApp(): Kleisli[AppTask, Request[AppTask], Response[AppTask]] =
     Router[AppTask](
-      "/health-check" -> HealthService.routes()
+      "/health-check" -> HealthService.routes(),
+      "/countries" -> CountryService.routes()
     ).orNotFound
 
   def runHttp[R <: layers.BaseModules](

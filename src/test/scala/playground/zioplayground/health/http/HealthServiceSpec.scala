@@ -1,4 +1,4 @@
-package playground.zioplayground.http
+package playground.zioplayground.health.http
 
 import io.circe.Decoder
 import io.circe.generic.semiauto.deriveDecoder
@@ -6,8 +6,8 @@ import io.circe.parser.decode
 import org.http4s._
 import org.http4s.circe.jsonOf
 import org.http4s.implicits._
-import playground.zioplayground.http.HTTPSpec.request
-import playground.zioplayground.http.HealthService._
+import playground.zioplayground.utils.HTTPSpec.request
+import playground.zioplayground.health.http.HealthService._
 import zio._
 import zio.interop.catz._
 import zio.test.Assertion._

@@ -5,7 +5,8 @@ import pureconfig.generic.semiauto._
 import zio._
 
 object AppConfig {
-  final case class Config(http: HttpConfig.Config)
+  final case class Config(http: HttpConfig.Config,
+                          database: DatabaseConfig.Config)
 
   object Config {
     implicit val convert: ConfigConvert[Config] = deriveConvert

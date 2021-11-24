@@ -2,7 +2,7 @@ package playground.zioplayground.config
 
 import pureconfig.ConfigConvert
 import pureconfig.generic.semiauto.deriveConvert
-import zio.ZLayer
+import zio._
 
 object HttpConfig {
   final case class Config(port: Int,
